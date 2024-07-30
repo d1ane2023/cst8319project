@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Nada Dhyan - Programs</title>
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body id="page-top">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-5">
+            <a class="NadaDhyan_Title" href="/">Nada Dhyan</a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav ms-auto my-lg-0"> <!-- Navigation links -->
+                    <li><a class="menu_bar nav-link me-lg-3" href="/about">About</a></li>
+
+                    <li class="dropdown">
+                        <a class="menu_bar nav-link me-lg-3" href="#">Programs</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item f1">• Online</a>
+                                    <ul><a class="dropdown-item" href="/user/program_on01">- Datta Kriya Yoga</a></ul>
+                                    <ul><a class="dropdown-item" href="/user/program_on02">- Pranayama with Meditation</a></ul>
+                                    <ul><a class="dropdown-item" href="/user/program_on03">- Webinars on Wellness</a></ul>
+                                <a class="dropdown-item f2">• In-Person</a>
+                                    <ul><a class="dropdown-item" href="/user/program_in01">- Datta Kriya Yoga</a></ul>
+                                    <ul><a class="dropdown-item" href="/user/program_in02">- Energizing  Sath sang</a></ul>
+                                    <ul><a class="dropdown-item" href="/user/program_in03">- Mini retreats</a></ul>
+                                    <ul><a class="dropdown-item" href="/user/program_in04">- Life Style Programs </a></ul>
+                                <a class="dropdown-item f3">• Out Reach</a>
+                                    <ul><a class="dropdown-item" href="/user/program_out01">- Seniors</a></ul>
+                                    <ul><a class="dropdown-item" href="/user/program_out02">- Lunch & Learn </a></ul>
+                            </div>
+                    </li>
+
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/calendar">Calendar</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/gallery">Gallery</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/blog">Blog</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/testimonials">Testimonials</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/contact_us">Contact Us</a></li>    
+                </ul>
+
+                <% if (user) { %>
+                    <a type="button" class="btn btn-primary" href="/user/userinfo">
+                        <span><%= user.username %></span>
+                    </a>
+                <% } else { %>
+                    <a type="button" class="btn btn-primary" href="/login">
+                        <span>Sign in</span>
+                    </a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+
+    
+    <!-- Blog Section -->
+    <section class="bg-light2 blog-intro">
+        <div class="container px-5">
+            <h2 class="Heading2">Programs</h2>
+            <h1>Join our exciting programs!</h1>
+        </div>
+    </section>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <footer class="bg-black text-center py-5">
+        <div class="container px-5">
+            <div>&copy; Copyright (c) 2011-2024 The Bootstrap Authors.</div>
+            <a href="#page-top">Go to top</a>
+        </div>
+    </footer>
+</body>
+</html>

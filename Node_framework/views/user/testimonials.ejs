@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metadata about the document -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Title of the webpage -->
+    <title>Nada Dhyan - Testimonials</title>
+
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+
+    <style>
+        
+        .testimonial-avatar {
+           
+            width: 90px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+<body id="page-top">
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-5">
+            <!-- Brand name in the navigation bar -->
+            <a class="NadaDhyan_Title" href="/">Nada Dhyan</a>
+
+            <!-- Collapsible navbar content -->
+            <div class="navbar-collapse">
+                <ul class="navbar-nav ms-auto my-lg-0"> <!-- Navigation links -->
+			<li><a class="menu_bar nav-link me-lg-3" href="/about">About</a></li>
+			<li><a class="menu_bar nav-link me-lg-3" href="/user/Programs">Programs</a></li>
+			<li><a class="menu_bar nav-link me-lg-3" href="/user/calendar">Calendar</a></li>
+			<li><a class="menu_bar nav-link me-lg-3" href="/user/gallery">Gallery</a></li>
+			<li><a class="menu_bar nav-link me-lg-3" href="/user/blog">Blog</a></li>
+			<li><a class="menu_bar nav-link me-lg-3" href="/user/testimonials">Testimonials</a></li>
+			<li><a class="menu_bar nav-link me-lg-3" href="/user/contact_us">Contact Us</a></li>    
+		    </ul>
+
+                <% if (user) { %>
+                    <a type="button" class="btn btn-primary" href="/user/userinfo">
+                        <span><%= user.username %></span>
+                    </a>
+                <% } else { %>
+                    <!-- Sign in button -->
+                    <a type="button" class="btn btn-primary" href="/login">
+                        <span>Sign in</span>
+                    </a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Section -->
+    <section class="bg-light2">
+        <div class="container px-5">
+            <h2 class="Heading2">User Testimonials</h2>
+            <h1>We'd Love to Hear from You. Share Your Experience.</h1>
+        </div>
+    </section>
+
+    <section>
+        <div class="container px-5">
+            <div class="text-center mb-5">
+              <!-- Flash Messages -->
+                <%- include('../template/messages') %>
+
+                <!-- Display approved testimonials -->
+                <div id="testimonials" class="row justify-content-center">
+                    <% testimonials.forEach(function(testimonial) { %>
+                        <div class="col-md-4">
+                            <div class="testimonial-card">
+
+                               
+                                <img src="<%= testimonial.user.photo ? '/' + testimonial.user.photo : '/user_profile_photo/default.jpg' %>" alt="User Avatar" class="testimonial-avatar">
+                                <p></p>
+                                <i class="fa fa-quote-left testimonial-icon"></i>
+
+                                <p class="testimonial-text"><%= testimonial.text %></p>
+                                <h4 class="testimonial-user"><%= testimonial.user.username %></h4>
+                                <small class="testimonial-date"><%= testimonial.date.toDateString() %></small>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <% if (user) { %>
+    <!-- Submit Testimonial Section -->
+    <section class="bg-light">
+        <div class="container px-5">
+            <div class="text-center mb-5">
+                <!-- Submit Testimonial header -->
+                <h2 class="Heading2 sizeControl">Submit Your Testimonial</h2>
+                <!-- Testimonial submission form -->
+                <form action="/user/testimonials" method="POST">
+                    <label for="user">Your Name</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="user" name="user" value="<%= user.username %>" required readonly>
+                    </div>
+                    <label for="text">Your Review</label>
+                    <div class="form-group">
+                        <textarea class="form-control3" id="text" name="text" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <% } else { %>
+    <section class="bg-light">
+        <div class="container px-5">
+            <div class="text-center mb-5 login-prompt">
+                <i class="fa fa-user-circle login-icon"></i>
+                <h1>Please <a href="/login">login</a> to submit your testimonial.</h1>
+            </div>
+        </div>
+    </section>
+    <% } %>
+
+    <!-- Section-divider -->
+    <section class="section-divider2"></section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-center py-5">
+        <div class="container px-5">
+            <div>
+                <div>&copy; Copyright (c) 2011-2024 The Bootstrap Authors.</div>
+                <a href="#page-top">Go to top</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS-->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

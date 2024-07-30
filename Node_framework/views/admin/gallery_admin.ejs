@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Title -->
+    <title>Nada Dhyan - Gallery</title>
+
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/admin.css">
+    <style>
+        #add {
+            display: none;
+        }
+
+        .update-form {
+            display: none;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-5">
+            <a class="NadaDhyan_Title" href="/admin/Users_admin/">Nada Dhyan - Admin</a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav ms-auto my-lg-0">
+			<li><a class="menu_bar nav-link me-lg-3" href="/admin/Users_admin">User</a></li>
+			<li><a class="menu_bar nav-link me-lg-3" href="/admin/contact_admin">Inbox</a></li>
+			    <li><a class="menu_bar nav-link me-lg-3" href="/admin/Programs_admin">Programs</a></li>
+			    <li><a class="menu_bar nav-link me-lg-3" href="/admin/calendar_admin">Calendar</a></li>
+			    <li><a class="menu_bar nav-link me-lg-3" href="/admin/gallery_admin">Gallery</a></li>
+			    <li><a class="menu_bar nav-link me-lg-3" href="/admin/blog_admin">Blog</a></li>
+			    <li><a class="menu_bar nav-link me-lg-3" href="/admin/testimonials_admin">Testimonials</a></li>
+			</ul>
+                <form action="/logout">
+                    <button type="submit" class="btn btn-primary">
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Gallery Section-->
+    <section class="bg-light">
+        <div class="container px-5">
+            <div class="text-center mb-5">
+                <h2 class="Heading2">Gallery - Admin</h2>
+                <button class="btn-add" onclick="showNewForm()">Add Image</button>
+                <!-- Flash Messages -->
+                <%- include('../template/messages') %>
+            </div>
+
+            <!-- New Image Section -->
+            <div class="bg-light" id="add">
+                <div class="container px-5">
+                    <h2>Upload New Image</h2>
+                    <form action="/admin/gallery_admin" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <label for="image-title">Image Title</label>
+                            <input type="text" class="input-block-level" name="title" id="image-title" required>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <label for="image-description">Image Description</label>
+                            <input type="text" class="input-block-level" name="description" id="image-description">
+                        </div>
+                        <br>
+                        <div class="row mb-3">
+                            <label for="file-source">File Source</label>
+                            <input type="file" accept="image/*" name="url" id="file-source" required>
+                        </div>
+                        <br>
+                        <div class="row mb-3">
+                            <div class="col-lg-1">
+                                <input class="btn-cancel" type="reset" onclick="cancelNewForm()" value="Cancel">
+                            </div>
+                            <div class="col-lg-1">
+                                <input class="btn-submit" type="submit" value="Submit New Image">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div>
+            <div class="row">
+                <% images.forEach(image=> { %>
+                    <div class="col-lg-4 col-md-6">
+                        <div>
+                            <img class="gallery_photo" src="<%= image.url %>" alt="<%= image.title %>" />
+                            <div>
+                                <strong>Title:</strong>
+                                <%= image.title %><br>
+                                    <strong>Description:</strong>
+                                    <%= image.description %>
+                                        <form action="/admin/gallery_admin/<%= image._id %>?_method=DELETE" method="POST"
+                                            style="display:inline;">
+                                            <button class="btn-cancel" type="submit">Delete</button>
+                                        </form>
+                                        <button class="btn-submit"
+                                            onclick="showUpdateForm('<%= image._id %>')">Update</button>
+                                        <div id="update-form-<%= image._id %>" class="update-form">
+                                            <form action="/admin/gallery_admin/update/<%= image._id %>?_method=PUT"
+                                                method="POST" enctype="multipart/form-data">
+                                                <div class="row">
+                                                    <label for="update-title-<%= image._id %>">Image Title</label>
+                                                    <input type="text" class="input-block-level" name="title"
+                                                        id="update-title-<%= image._id %>" value="<%= image.title %>"
+                                                        required>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <label for="update-description-<%= image._id %>">Image
+                                                        Description</label>
+                                                    <input type="text" class="input-block-level" name="description"
+                                                        id="update-description-<%= image._id %>"
+                                                        value="<%= image.description %>">
+                                                </div>
+                                                <br>
+                                                <div class="row mb-3">
+                                                    <label for="update-file-<%= image._id %>">File Source (leave empty
+                                                        to keep current image)</label>
+                                                    <input type="file" accept="image/*" name="url"
+                                                        id="update-file-<%= image._id %>">
+                                                </div>
+                                                <br>
+                                                <div class="row mb-3">
+                                                    <div class="col-lg-1">
+                                                        <input type="reset" onclick="hideUpdateForm('<%= image._id %>')"
+                                                            value="Cancel">
+                                                    </div>
+                                                    <div class="col-lg-1">
+                                                        <input type="submit" value="Submit Update">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section-divider -->
+    <section class="section-divider2"></section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-center py-5">
+        <div class="container px-5">
+            <div>
+                <div>&copy; Copyright (c) 2011-2024 The Bootstrap Authors.</div>
+                <a href="#page-top">Go to top</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS-->
+    <script>
+        function showNewForm() {
+            var createNewArea = document.getElementById('add');
+            createNewArea.style.display = 'block';
+            toggleButton();
+        }
+
+        function cancelNewForm() {
+            var createNewArea = document.getElementById('add');
+            createNewArea.style.display = 'none';
+            toggleButton();
+        }
+
+        function toggleButton() {
+            var button = document.getElementById('newFormButton');
+            if (button.style.display === 'none') {
+                button.style.display = 'block';
+                button.style.marginLeft = 'auto';
+                button.style.marginRight = 'auto';
+            } else {
+                button.style.display = 'none';
+            }
+        }
+
+        function showUpdateForm(id) {
+            var updateForm = document.getElementById('update-form-' + id);
+            updateForm.style.display = 'block';
+        }
+
+        function hideUpdateForm(id) {
+            var updateForm = document.getElementById('update-form-' + id);
+            updateForm.style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

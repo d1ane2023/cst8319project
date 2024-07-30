@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metadata about the document -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Title of the webpage -->
+    <title>Nada Dhyan - Testimonials Admin</title>
+
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+
+    <style>
+        
+        .testimonial-avatar {
+           
+            width: 90px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+<body id="page-top">
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-5">
+            <a class="NadaDhyan_Title" href="/admin/Users_admin/">Nada Dhyan - Admin</a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav ms-auto my-lg-0">
+			<li><a class="menu_bar nav-link me-lg-3" href="/admin/Users_admin">User</a></li>
+			<li><a class="menu_bar nav-link me-lg-3" href="/admin/contact_admin">Inbox</a></li>
+			    <li><a class="menu_bar nav-link me-lg-3" href="/admin/Programs_admin">Programs</a></li>
+			    <li><a class="menu_bar nav-link me-lg-3" href="/admin/calendar_admin">Calendar</a></li>
+			    <li><a class="menu_bar nav-link me-lg-3" href="/admin/gallery_admin">Gallery</a></li>
+			    <li><a class="menu_bar nav-link me-lg-3" href="/admin/blog_admin">Blog</a></li>
+			    <li><a class="menu_bar nav-link me-lg-3" href="/admin/testimonials_admin">Testimonials</a></li>
+			</ul>
+                <form action="/logout">
+                    <button type="submit" class="btn btn-primary">
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Section -->
+    <section class="bg-light">
+        <div class="container px-5">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Admin header -->
+                    <h2 class="Heading2">Testimonials - Admin</h2>
+                    <!-- Admin description -->
+                    <p>Manage testimonials submitted by users. Approve or unapprove them as needed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Testimonials Admin Section -->
+     <section>
+        <div class="container px-5">
+            <div class="text-center mb-5 admin-section">
+                <!-- Testimonials header -->
+                <h2 class="Heading2">Testimonials - Admin</h2>
+                 <!-- Admin description -->
+                 <p>Manage testimonials submitted by users. Approve or unapprove them as needed.</p>
+                 <!-- Flash Messages -->
+                 <%- include('../template/messages') %>
+                <!-- Display all testimonials -->
+                <div id="testimonials">
+                    <% testimonials.forEach(function(testimonial) { %>
+                        <div class="testimonial-card">
+
+                            <img src="<%= testimonial.user.photo ? '/' + testimonial.user.photo : '/user_profile_photo/default.jpg' %>" alt="User Avatar" class="testimonial-avatar">
+                            <p></p>
+                            <h4 class="testimonial-user"><%= testimonial.user.username %></h4>
+
+                            <p class="testimonial-text"><%= testimonial.text %></p>
+                            <small class="testimonial-date2"><%= testimonial.date.toDateString() %></small>
+                            <% if (!testimonial.isApproved) { %>
+                                <form action="/admin/testimonials_admin/approve/<%= testimonial._id %>" method="POST">
+                                    <button type="submit" class="btn badge-success mt-2">Active</button>
+                                </form>
+                            <% } else { %>
+                                <form action="/admin/testimonials_admin/unapprove/<%= testimonial._id %>" method="POST">
+                                    <button type="submit" class="btn badge-warning mt-2">Inactive</button>
+                                </form>
+                                <span class="badge badge-approved mt-2">-----------------------------  Actived by Admin  -----------------------------</span>
+                            <% } %>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-center py-5">
+        <div class="container px-5">
+            <div>
+                <div>&copy; Copyright (c) 2011-2024 The Bootstrap Authors.</div>
+                <a href="#page-top">Go to top</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS-->
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Add Admin User</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/admin.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-5">
+            <a class="NadaDhyan_Title" href="/admin/Users_admin">Nada Dhyan - Admin</a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav ms-auto my-lg-0">
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/Users_admin">User</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/contact_admin">Inbox</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/Programs_admin">Programs</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/calendar_admin">Calendar</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/gallery_admin">Gallery</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/blog_admin">Blog</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/testimonials_admin">Testimonials</a></li>
+                </ul>
+                <form action="/logout" method="POST">
+                    <button type="submit" class="btn btn-primary">
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container-left py-5">
+        <div class="page-header">
+            <h1 class="display-5 fw-bold">Add Admin User</h1>
+	    <!-- Flash Messages -->
+            <%- include('../template/messages') %>
+        </div>
+        <form action="/admin/addAdminUser" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Admin</button>
+        </form>
+    </div>
+</body>
+</html>

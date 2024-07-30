@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <!-- Metadata about the document -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Title of the webpage -->
+    <title>Nada Dhyan - Contact Us</title>
+    
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+</head>
+<body id="page-top"> 
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-5">
+            <!-- Brand name in the navigation bar -->
+            <a class="NadaDhyan_Title" href="/">Nada Dhyan</a>
+          
+            <!-- Collapsible navbar content -->
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto my-lg-0">
+                    <!-- Navigation links -->
+                    <li><a class="menu_bar nav-link me-lg-3" href="/about">About</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/Programs">Programs</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/calendar">Calendar</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/gallery">Gallery</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/blog">Blog</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/testimonials">Testimonials</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/contact_us">Contact Us</a></li>
+                </ul>
+
+                <% if (user) { %>
+                    <a type="button" class="btn btn-primary" href="/user/userinfo">
+                        <span><%= user.username %></span>
+                    </a>
+                <% } else { %>
+                    <!-- Sign in button -->
+                    <a type="button" class="btn btn-primary" href="/login">
+                        <span>Sign in</span>
+                    </a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Us Section -->
+    <section class="bg-light">
+        <div class="container px-5">
+            <div class="text-center">
+                <h2 class="Heading2">Contact Us</h2>
+                <p>If you have any questions or would like to get in touch, fill out the form below or contact us using the provided information.</p>
+            </div>
+            <!-- Flash Messages -->
+            <%- include('../template/messages') %>
+            <div class="text-sort">
+                <form action="/user/contact_us" method="POST">
+                    <div>
+                        <label for="name" class="form-font">Name</label>
+                        <input type="text" class="form-control1" id="name" name="name" required>
+                    </div>
+                    <div>
+                        <label for="phone" class="form-font">Phone</label>
+                        <input type="text" class="form-control1" id="phone" name="phone" required>
+                    </div>
+                    <div>
+                        <label for="email" class="form-font">Email</label>
+                        <input type="email" class="form-control1" id="email" name="email" required>
+                    </div>
+                    <div>
+                        <label for="message" class="form-font">Message</label>
+                        <textarea class="form-control2" id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <div class="submit_button">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Information Section -->
+    <section class="contact_section">
+        <div class="container px-5">
+            <div class="text-center">
+                <!-- Contact Information -->
+                <h2 class="Heading2">Contact Information</h2>
+            </div>
+            <div class="text-sort">
+                <p class="vivid"><strong>Email:</strong> contact@nadadhyan.com</p>
+                <p class="vivid"><strong>Phone (Ottawa):</strong> +1 (416) 574-7408 </p>
+                <p class="vivid"><strong>Phone (Toronto):</strong> +1 (613) 355-2520</p>
+                <p class="vivid"><strong>Address:</strong> Dundas & Bloor St</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="bg-light">
+        <div class="container px-5">
+            <div class="text-center mb-5">
+                <!-- Map header -->
+                <h2 class="Heading2">Our Location</h2>
+                <!-- Embedded Google Map -->
+                <div class="map-container" style="position:relative; overflow:hidden;">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.1677759885177!2d-79.45740298450447!3d43.66228187912113!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b349b5cce700b%3A0x8443a6a2d23e79b4!2sToronto%2C%20ON%20M6P%204A9%2C%20Canada!5e0!3m2!1sen!2sus!4v1599253046203!5m2!1sen!2sus" 
+                        width="600" height="450" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0">
+                    </iframe>
+                </div>
+                <p class="location"><strong>※ BY APPOINTMENT ONLY ※</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section-divider -->
+    <section class="section-divider2"></section>
+    
+    <!-- Footer -->
+    <footer class="bg-black text-center py-5">
+        <div class="container px-5">
+            <div>
+                <div>&copy; Copyright (c) 2011-2024 The Bootstrap Authors.</div> 
+                <a href="#page-top">Go to top</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+</body>
+</html>

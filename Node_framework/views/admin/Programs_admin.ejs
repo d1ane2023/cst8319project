@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<title>Nada Dhyan - Programs</title>
+	<link href="/css/styles.css" rel="stylesheet" />
+	<link href="/css/admin.css" rel="stylesheet" />
+	<style>
+		#add {
+			display: none;
+		}
+
+		#program-description {
+			height: 250px;
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body id="page-top">
+	<nav class="navbar navbar-expand-lg">
+		<div class="container px-5">
+		    <a class="NadaDhyan_Title" href="/admin/Users_admin/">Nada Dhyan - Admin</a>
+		    <div class="navbar-collapse">
+			<ul class="navbar-nav ms-auto my-lg-0">
+				<li><a class="menu_bar nav-link me-lg-3" href="/admin/Users_admin">User</a></li>
+				<li><a class="menu_bar nav-link me-lg-3" href="/admin/contact_admin">Inbox</a></li>
+				    <li><a class="menu_bar nav-link me-lg-3" href="/admin/Programs_admin">Programs</a></li>
+				    <li><a class="menu_bar nav-link me-lg-3" href="/admin/calendar_admin">Calendar</a></li>
+				    <li><a class="menu_bar nav-link me-lg-3" href="/admin/gallery_admin">Gallery</a></li>
+				    <li><a class="menu_bar nav-link me-lg-3" href="/admin/blog_admin">Blog</a></li>
+				    <li><a class="menu_bar nav-link me-lg-3" href="/admin/testimonials_admin">Testimonials</a></li>
+				</ul>
+			<form action="/logout">
+			    <button type="submit" class="btn btn-primary">
+				<span>Logout</span>
+			    </button>
+			</form>
+		    </div>
+		</div>
+	    </nav>
+
+	<section class="bg-light">
+		<div class="container px-5">
+			<div class="row">
+				<div class="col-lg-10">
+					<h2 class="Heading2">Programs - Admin</h2>
+
+					<button class="btn-add" onclick="showNewForm()">Add Program</button>
+
+					<!-- Flash Messages -->
+					<%- include('../template/messages') %>
+
+				</div>
+			</div>
+
+			<div class="bg-light" id="add">
+				<div class="container px-5">
+					<h2>Add New Program</h2>
+					<form action="/admin/Programs_admin" method="POST">
+						<div class="row">
+							<label for="program-title">Program Title</label>
+							<input type="text" class="input-block-level" name="title" id="program-title" required>
+						</div>
+						<br>
+						<div class="row">
+							<label for="program-quote">Program Quote</label>
+							<input type="number" class="input-block-level" name="quote" id="program-quote" required>
+						</div>
+						<br>
+						<div class="row">
+							<label for="program-date">Program Date</label>
+							<input type="date" class="input-block-level" name="date" id="program-date" required>
+						</div>
+						<br>
+						<div class="row">
+							<label for="program-category">Program Category</label>
+							<select name="category" id="program-category" required>
+								<option value="online">Online</option>
+								<option value="in-person">In-Person</option>
+								<option value="outreach">Outreach</option>
+							</select>
+						</div>
+						<br>
+						<div class="row mb-3">
+							<textarea id="program-description" placeholder="Enter the program description here..." name="description"></textarea>
+						</div>
+						<br>
+						<div class="row mb-3">
+							<div class="col-lg-1">
+								<input class="btn-cancel" type="reset" onclick="cancelNewForm()" value="Cancel">
+							</div>
+							<div class="col-lg-1">
+								<input class="btn-submit" type="submit" value="Submit New Program">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div>
+				<h3>All Programs</h3>
+				<div>
+					<% programs.forEach(program => { %>
+						<div class="program-item">
+							<div class="button-container">
+								<button class="btn btn-submit" onclick="showUpdateForm('<%= program._id %>', '<%= program.title %>', '<%= program.quote %>', '<%= program.date.toISOString().split('T')[0] %>', '<%= program.description.replace(/'/g, "\\'") %>')">Update</button>
+								<form action="/admin/programs_admin/<%= program._id %>?_method=DELETE" method="POST" class="d-inline">
+									<button type="submit" class="btn btn-cancel">Delete</button>
+								</form>
+							</div>
+							<div class="program-info">
+								<ul>
+									<li><strong>Title:</strong> <%= program.title %><br></li>
+									<li><strong>Quote:</strong> <%= program.quote %><br></li>
+									<li><strong>Date:</strong> <%= program.date.toDateString() %><br></li>
+									<li><strong>Description:</strong> <%= program.description %><br></li>
+									<li><strong>Category:</strong> <%= program.category %><br></li>
+									<li><strong>Registrations:</strong> <% program.registrations.forEach(user => { %>
+										<div class="registration-item">
+											<span><%= user.username %> (<%= user.email %>)</span>
+											<form action="/Programs_admin/force_quit/<%= program._id %>/<%= user._id %>" method="POST">
+												<button class="btn_force" type="submit">Force Quit</button>
+											</form>
+										</div> <% }); %></li>
+								</ul>
+							</div>
+							<div id="updateForm-<%= program._id %>" style="display: none;">
+								<form action="/admin/Programs_admin/update/<%= program._id %>?_method=PUT" method="POST">
+									<div class="row">
+										<label for="update-title">Program Title</label>
+										<input type="text" class="input-block-level" name="title" id="update-title-<%= program._id %>" required>
+									</div>
+									<br>
+									<div class="row">
+										<label for="update-quote">Program Quote</label>
+										<input type="number" class="input-block-level" name="quote" id="update-quote-<%= program._id %>" required>
+									</div>
+									<br>
+									<div class="row">
+										<label for="update-date">Program Date</label>
+										<input type="date" class="input-block-level" name="date" id="update-date-<%= program._id %>" required>
+									</div>
+									<br>
+									<div class="row">
+										<label for="update-category-<%= program._id %>">Program Category</label>
+										<select name="category" id="update-category-<%= program._id %>" required>
+											<option value="online" <%= program.category === 'online' ? 'selected' : '' %>>Online</option>
+											<option value="in-person" <%= program.category === 'in-person' ? 'selected' : '' %>>In-Person</option>
+											<option value="outreach" <%= program.category === 'outreach' ? 'selected' : '' %>>Outreach</option>
+										</select>
+									</div>
+									<br>
+									<div class="row mb-3">
+										<textarea class="large-textarea" id="update-description-<%= program._id %>" placeholder="Enter the program description here..." name="description"></textarea>
+									</div>
+									<br>
+									<div class="row mb-3">
+										<div class="col-lg-1">
+											<input class="btn-cancel" type="reset" onclick="hideUpdateForm('<%= program._id %>')" value="Cancel">
+										</div>
+										<div class="col-lg-1">
+											<input class="btn-submit" type="submit" value="Submit Update">
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					<% }); %>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="bg-black text-center py-5">
+		<div class="container px-5">
+			<div>&copy; Copyright (c) 2011-2024 The Bootstrap Authors.</div>
+			<a href="#page-top">Go to top</a>
+		</div>
+	</footer>
+
+	<script>
+		function showNewForm() {
+			var createNewArea = document.getElementById('add');
+			createNewArea.style.display = 'block';
+			toggleButton();
+		}
+
+		function cancelNewForm() {
+			var createNewArea = document.getElementById('add');
+			createNewArea.style.display = 'none';
+			toggleButton();
+		}
+
+		function toggleButton() {
+			var button = document.getElementById('newFormButton');
+			if (button.style.display === 'none') {
+				button.style.display = 'block';
+			} else {
+				button.style.display = 'none';
+			}
+		}
+
+		function showUpdateForm(id, title, quote, date, description) {
+			var updateForm = document.getElementById('updateForm-' + id);
+			document.getElementById('update-title-' + id).value = title;
+			document.getElementById('update-quote-' + id).value = quote;
+			document.getElementById('update-date-' + id).value = date;
+			document.getElementById('update-description-' + id).value = description;
+			updateForm.style.display = 'block';
+		}
+
+		function hideUpdateForm(id) {
+			var updateForm = document.getElementById('updateForm-' + id);
+			updateForm.style.display = 'none';
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+/* Global Styles */
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+/* Navigation Bar */
+.navbar {
+  background-color: #343a40;
+  padding: 1rem;
+}
+
+.navbar .NadaDhyan_Title {
+  color: #fff;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.navbar .menu_bar.nav-link {
+  color: #fff;
+  margin-right: 1rem;
+}
+
+
+/* Blog Intro Section */
+.blog-intro {
+  background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.blog-intro h1 {
+  font-size: 2.5rem;
+  margin-top: 1rem;
+}
+
+/* Blog Posts Section */
+.blog-posts .Heading2 {
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.blog-card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.blog-card h3 a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.blog-card h3 a:hover {
+  text-decoration: underline;
+}
+
+.blog-card p {
+  margin: 0.5rem 0;
+}
+
+.blog-card small {
+  color: #666;
+}

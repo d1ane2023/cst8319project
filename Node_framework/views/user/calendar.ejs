@@ -1,0 +1,333 @@
+<!-- views/calendar.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metadata about the document -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Title of the webpage -->
+    <title>Nada Dhyan - Calendar</title>
+    
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link
+       rel="stylesheet"
+       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+       integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+       crossorigin="anonymous"
+       referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/css/calendar.css">
+</head>
+<body id="page-top"> 
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-5">
+            <!-- Brand name in the navigation bar -->
+            <a class="NadaDhyan_Title" href="/">Nada Dhyan</a>
+          
+            <!-- Collapsible navbar content -->
+            <div class="navbar-collapse">
+                <ul class="navbar-nav ms-auto my-lg-0">
+                    <li><a class="menu_bar nav-link me-lg-3" href="/About">About</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/Programs">Programs</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/calendar">Calendar</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/gallery">Gallery</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/blog">Blog</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/testimonials">Testimonials</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/contact_us">Contact Us</a></li>
+                </ul>
+
+                <% if (user) { %>
+                    <a type="button" class="btn btn-primary" href="/user/userinfo">
+                        <span><%= user.username %></span>
+                    </a>
+                <% } else { %>
+                    <!-- Sign in button -->
+                    <a type="button" class="btn btn-primary" href="/login">
+                        <span>Sign in</span>
+                    </a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Calendar Section -->
+    <section class="bg-light">
+        <div class="container px-5">
+            <div class="text-center mb-5">
+                <h2 class="Heading2">Calendar</h2>
+                <p>Explore our upcoming events and programs in the calendar below.</p>
+            </div>
+        </div>
+
+        <div class="container2">
+            <div class="left">
+              <div class="calendar">
+                <div class="month">
+                  <i class="fas fa-angle-left prev"></i>
+                  <div class="date">December 2021</div>
+                  <i class="fas fa-angle-right next"></i>
+                </div>
+                <div class="weekdays">
+                  <div>Sun</div>
+                  <div>Mon</div>
+                  <div>Tue</div>
+                  <div>Wed</div>
+                  <div>Thu</div>
+                  <div>Fri</div>
+                  <div>Sat</div>
+                </div>
+                <div class="days"></div>
+                <div class="goto-today">
+                  <div class="goto">
+                    <input type="text" placeholder="mm/yyyy" class="date-input" />
+                    <button class="goto-btn">Go</button>
+                  </div>
+                  <button class="today-btn">Today</button>
+                </div>
+              </div>
+            </div>
+            <div class="right">
+              <div class="today-date">
+                <div class="event-day">Wed</div>
+                <div class="event-date">15th December 2021</div>
+              </div>
+              <div class="events"></div>
+            </div>
+          </div>
+    </section>
+
+    <script>
+        const calendar = document.querySelector(".calendar"),
+              date = document.querySelector(".date"),
+              daysContainer = document.querySelector(".days"),
+              prev = document.querySelector(".prev"),
+              next = document.querySelector(".next"),
+              todayBtn = document.querySelector(".today-btn"),
+              gotoBtn = document.querySelector(".goto-btn"),
+              dateInput = document.querySelector(".date-input"),
+              eventDay = document.querySelector(".event-day"),
+              eventDate = document.querySelector(".event-date"),
+              eventsContainer = document.querySelector(".events");
+
+        let today = new Date();
+        let activeDay;
+        let month = today.getMonth();
+        let year = today.getFullYear();
+
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        let eventsArr = [];
+
+        function fetchEvents() {
+            fetch('/api/events')
+                .then(response => response.json())
+                .then(data => {
+                    eventsArr = data;
+                    initCalendar();
+                })
+                .catch(error => console.error('Error fetching events:', error));
+        }
+
+        fetchEvents();
+
+        function initCalendar() {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const prevLastDay = new Date(year, month, 0);
+            const prevDays = prevLastDay.getDate();
+            const lastDate = lastDay.getDate();
+            const day = firstDay.getDay();
+            const nextDays = 7 - lastDay.getDay() - 1;
+
+            date.innerHTML = months[month] + " " + year;
+
+            let days = "";
+
+            for (let x = day; x > 0; x--) {
+                days += `<div class="day prev-date">${prevDays - x + 1}</div>`;
+            }
+
+            for (let i = 1; i <= lastDate; i++) {
+                let event = false;
+                eventsArr.forEach((eventObj) => {
+                    if (
+                        eventObj.day === i &&
+                        eventObj.month === month + 1 &&
+                        eventObj.year === year
+                    ) {
+                        event = true;
+                    }
+                });
+                if (
+                    i === new Date().getDate() &&
+                    year === new Date().getFullYear() &&
+                    month === new Date().getMonth()
+                ) {
+                    activeDay = i;
+                    getActiveDay(i);
+                    updateEvents(i);
+                    days += event ? `<div class="day today active event">${i}</div>` : `<div class="day today active">${i}</div>`;
+                } else {
+                    days += event ? `<div class="day event">${i}</div>` : `<div class="day">${i}</div>`;
+                }
+            }
+
+            for (let j = 1; j <= nextDays; j++) {
+                days += `<div class="day next-date">${j}</div>`;
+            }
+            daysContainer.innerHTML = days;
+            addListner();
+        }
+
+        function prevMonth() {
+            month--;
+            if (month < 0) {
+                month = 11;
+                year--;
+            }
+            initCalendar();
+        }
+
+        function nextMonth() {
+            month++;
+            if (month > 11) {
+                month = 0;
+                year++;
+            }
+            initCalendar();
+        }
+
+        prev.addEventListener("click", prevMonth);
+        next.addEventListener("click", nextMonth);
+
+        initCalendar();
+
+        function addListner() {
+            const days = document.querySelectorAll(".day");
+            days.forEach((day) => {
+                day.addEventListener("click", (e) => {
+                    getActiveDay(e.target.innerHTML);
+                    updateEvents(Number(e.target.innerHTML));
+                    activeDay = Number(e.target.innerHTML);
+                    days.forEach((day) => {
+                        day.classList.remove("active");
+                    });
+                    if (e.target.classList.contains("prev-date")) {
+                        prevMonth();
+                        setTimeout(() => {
+                            const days = document.querySelectorAll(".day");
+                            days.forEach((day) => {
+                                if (!day.classList.contains("prev-date") && day.innerHTML === e.target.innerHTML) {
+                                    day.classList.add("active");
+                                }
+                            });
+                        }, 100);
+                    } else if (e.target.classList.contains("next-date")) {
+                        nextMonth();
+                        setTimeout(() => {
+                            const days = document.querySelectorAll(".day");
+                            days.forEach((day) => {
+                                if (!day.classList.contains("next-date") && day.innerHTML === e.target.innerHTML) {
+                                    day.classList.add("active");
+                                }
+                            });
+                        }, 100);
+                    } else {
+                        e.target.classList.add("active");
+                    }
+                });
+            });
+        }
+
+        todayBtn.addEventListener("click", () => {
+            today = new Date();
+            month = today.getMonth();
+            year = today.getFullYear();
+            initCalendar();
+        });
+
+        dateInput.addEventListener("input", (e) => {
+            dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
+            if (dateInput.value.length === 2) {
+                dateInput.value += "/";
+            }
+            if (dateInput.value.length > 7) {
+                dateInput.value = dateInput.value.slice(0, 7);
+            }
+            if (e.inputType === "deleteContentBackward") {
+                if (dateInput.value.length === 3) {
+                    dateInput.value = dateInput.value.slice(0, 2);
+                }
+            }
+        });
+
+        gotoBtn.addEventListener("click", gotoDate);
+
+        function gotoDate() {
+            const dateArr = dateInput.value.split("/");
+            if (dateArr.length === 2) {
+                if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
+                    month = dateArr[0] - 1;
+                    year = dateArr[1];
+                    initCalendar();
+                    return;
+                }
+            }
+            alert("Invalid Date");
+        }
+
+        function getActiveDay(date) {
+            const day = new Date(year, month, date);
+            const dayName = day.toString().split(" ")[0];
+            eventDay.innerHTML = dayName;
+            eventDate.innerHTML = date + " " + months[month] + " " + year;
+        }
+
+        function updateEvents(date) {
+            let events = "";
+            eventsArr.forEach((event) => {
+                if (
+                    date === event.day &&
+                    month + 1 === event.month &&
+                    year === event.year
+                ) {
+                    events += `<div class="event">
+                        <div class="title">
+                        <i class="fas fa-circle"></i>
+                        <h3 class="event-title">${event.title}</h3>
+                        </div>
+                        <div class="event-time">
+                        <span class="event-time">${event.time}</span>
+                        </div>
+                    </div>`;
+                }
+            });
+            if (events === "") {
+                events = `<div class="no-event">
+                        <h3>No Events</h3>
+                    </div>`;
+            }
+            eventsContainer.innerHTML = events;
+        }
+    </script>
+
+    <!-- Section-divider -->
+    <section class="section-divider2"></section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-center py-5">
+        <div class="container px-5">
+            <div>
+                <div>&copy; Copyright (c) 2011-2024 The Bootstrap Authors.</div> 
+                <a href="#page-top">Go to top</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

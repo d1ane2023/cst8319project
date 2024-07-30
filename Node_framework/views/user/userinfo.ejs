@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Metadata about the document -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <!-- Title of the webpage -->
+  <title>Nada Dhyan - User Info</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+ 
+  <style>
+    body {
+      font-size: 1.1rem;
+      /* Adjust font size */
+      font-weight: 500;
+      /* Adjust font weight */
+      font-family: "Arial", sans-serif;
+      /* Set global font */
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-weight: 700;
+      /* Bold headers */
+    }
+
+    p,
+    label,
+    input,
+    textarea,
+    button {
+      font-size: 1.1rem;
+      /* Adjust font size */
+      font-weight: 500;
+      /* Adjust font weight */
+    }
+
+    .custom-username {
+      color: #ff6347;
+      font-family: "Arial", sans-serif;
+    }
+
+    .profile-photo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .form-container {
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .form-control-file-sm {
+      width: auto;
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      border-radius: 0.2rem;
+    }
+
+    .btn-primary {
+      --bs-btn-bg: #004085;
+      --bs-btn-border-color: #004085;
+      font-size: 1.25rem;
+      /* Adjust font size */
+      font-weight: 600;
+    }
+
+    .btn-secondary {
+      --bs-btn-bg: #6c757d;
+      --bs-btn-border-color: #6c757d;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .btn-danger {
+      --bs-btn-bg: #d9534f;
+      --bs-btn-border-color: #d9534f;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .btn-info {
+      --bs-btn-bg: #5bc0de;
+      --bs-btn-border-color: #5bc0de;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .always-visible {
+      display: block !important;
+    }
+
+    .title-spacing {
+      margin-bottom: 1rem;
+      /* Adjust this value as needed */
+    }
+
+    .username-display {
+      font-size: 2rem;
+      color: #c54c0a;
+      /* Adjust username color */
+      text-align: center;
+      /* Center align username */
+      font-weight: 700;
+      /* Bold username */
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- User Info Section -->
+  <div class="container py-5">
+    <h1 class="display-5 fw-bold text-center title-spacing">Account Information</h1>
+    <div class="display-5 fw-bold text-center">
+      <p id="username" class="username-display">User: <%= user.username %>
+      </p>
+    </div>
+    <!-- Flash Messages -->
+    <%- include('../template/messages') %>
+    <div class="row">
+      <!-- Profile Photo and Biography Section -->
+      <div class="col-lg-4">
+        <div class="form-container">
+          <h2 class="section-title">My Profile</h2>
+          <div class="mb-4 text-center">
+            <img src="<%= user.photo ? '/' + user.photo : '/user_profile_photo/default.jpg' %>" alt="Profile Photo"
+              class="profile-photo mb-2" />
+          </div>
+          <form action="/user/update-photo-biography" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="photo">Photo:</label>
+              <input type="file" class="form-control-file form-control-file-sm" id="photo" name="photo" />
+            </div>
+            <div class="form-group">
+              <label for="biography">Biography:</label>
+              <textarea class="form-control" id="biography" name="biography"><%= user.biography %></textarea>
+            </div>
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary">Update Profile</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Contact Info Section -->
+      <div class="col-lg-4">
+        <div class="form-container">
+          <h2 class="section-title">Contact Info</h2>
+          <form action="/user/update-contact-info" method="POST">
+            <div class="form-group">
+              <label for="firstName">First Name:</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" value="<%= user.firstName %>" />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name:</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" value="<%= user.lastName %>" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone:</label>
+              <input type="text" class="form-control" id="phone" name="phone" value="<%= user.phone %>" />
+            </div>
+            <div class="form-group">
+              <label for="address">Address:</label>
+              <input type="text" class="form-control" id="address" name="address" value="<%= user.address %>" />
+            </div>
+            <div class="form-group">
+              <label for="city">City:</label>
+              <input type="text" class="form-control" id="city" name="city" value="<%= user.city %>" />
+            </div>
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary">Update Contact Info</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Password Section -->
+      <div class="col-lg-4">
+        <div class="form-container">
+          <h2 class="section-title">Change Password</h2>
+          <form action="/user/update-password" method="POST">
+            <div class="form-group">
+              <label for="oldPassword">Old Password:</label>
+              <input type="password" class="form-control" id="oldPassword" name="oldPassword" />
+            </div>
+            <div class="form-group">
+              <label for="password">New Password:</label>
+              <input type="password" class="form-control" id="password" name="password" />
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm New Password:</label>
+              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" />
+            </div>
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary">Update Password</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="mr-3">
+      <a href="/logout" class="btn btn-danger btn-lg always-visible"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+    </div>
+    <div class="ml-3">
+      <a href="/" class="btn btn-secondary btn-lg always-visible"><i class="fas fa-home"></i> Back to Home</a>
+    </div>
+  </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

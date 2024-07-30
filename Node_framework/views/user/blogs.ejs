@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metadata about the document -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Title of the webpage -->
+    <title>Nada Dhyan - Blog</title>
+    
+    <!-- Core theme CSS -->
+    <link href="/css/styles.css" rel="stylesheet" />
+    <link href="/css/blog.css" rel="stylesheet"/>
+</head>
+<body id="page-top"> 
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-5">
+            <!-- Brand name in the navigation bar -->
+            <a class="NadaDhyan_Title" href="/">Nada Dhyan</a>
+            <!-- Collapsible navbar content -->
+            <div class="navbar-collapse">
+                <ul class="navbar-nav ms-auto my-lg-0">
+                    <li><a class="menu_bar nav-link me-lg-3" href="/about">About</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/Programs">Programs</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/calendar">Calendar</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/gallery">Gallery</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/blog">Blog</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/testimonials">Testimonials</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/user/contact_us">Contact Us</a></li>    
+                </ul>
+                <% if (user) { %>
+                    <a type="button" class="btn btn-primary" href="/user/userinfo">
+                        <span><%= user.username %></span>
+                    </a>
+                <% } else { %>
+                    <!-- Sign in button -->
+                    <a type="button" class="btn btn-primary" href="/login">
+                        <span>Sign in</span>
+                    </a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Section -->
+    <section class="bg-light2 blog-intro">
+        <div class="container px-5">
+
+            <h2 class="Heading2">Blogs</h2>
+            <h1>Share Your Ideas!</h1>
+
+        </div>
+    </section>
+
+    <!-- Blog Posts Section -->
+    <section class="blog-posts">
+        <div class="container px-5">
+            <div class="text-center mb-5">
+                <h2 class="Heading2">Blog Posts</h2>
+                <% if (blogs && blogs.length > 0) { %>
+                    <div class="blog-list">
+                        <% blogs.forEach(blog => { %>
+
+                            <div class="blog-card">
+
+                                <h3><a href="/user/blog/<%= blog._id %>"><%= blog.subject %></a></h3>
+
+
+                                <p><%= blog.text.substring(0, 100) %>...</p>
+                                <p><small>Posted on <%= blog.date.toDateString() %></small></p>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <p>No blog posts available.</p>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-center py-5">
+        <div class="container px-5">
+            <div>
+                <div>&copy; Copyright (c) 2011-2024 The Bootstrap Authors.</div> 
+                <a href="#page-top">Go to top</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Messages</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        .table tbody tr {
+            background-color: white; /* 设置所有行的初始背景为白色 */
+        }
+        .unread-message {
+            background-color: #ffe6e6 !important; /* 粉色背景 */
+        }
+        .btn-read {
+            background-color: #5cb85c; /* 绿色背景 */
+            color: white;
+        }
+        .btn-unread {
+            background-color: #f0ad4e; /* 橙色背景 */
+            color: white;
+        }
+        .btn-replied {
+            background-color: #0275d8; /* 蓝色背景 */
+            color: white;
+        }
+        .btn-not-replied {
+            background-color: #5bc0de; /* 浅蓝色背景 */
+            color: white;
+        }
+        .btn-danger {
+            background-color: #d9534f; /* 红色背景 */
+            color: white;
+        }
+        .btn i {
+            margin-right: 5px;
+        }
+        .btn-primary {
+            --bs-btn-bg: #cf5b30; /* 自定义的主按钮颜色 */
+            --bs-btn-border-color: #cf5b30;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-5">
+            <a class="NadaDhyan_Title" href="/admin/Users_admin">Nada Dhyan - Admin</a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav ms-auto my-lg-0">
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/Users_admin">User</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/contact_admin">Inbox</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/Programs_admin">Programs</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/calendar_admin">Calendar</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/gallery_admin">Gallery</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/blog_admin">Blog</a></li>
+                    <li><a class="menu_bar nav-link me-lg-3" href="/admin/testimonials_admin">Testimonials</a></li>
+                </ul>
+                <form action="/logout">
+                    <button type="submit" class="btn btn-primary">
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <h1>Contact Messages</h1>
+        <%- include('../template/messages') %>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Read Status</th>
+                    <th>Reply Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% messages.forEach(message => { %>
+                    <tr class="<%= message.isRead ? '' : 'unread-message' %>">
+                        <td><%= message.name %></td>
+                        <td><%= message.email %></td>
+                        <td><%= message.phone %></td>
+                        <td><%= message.message %></td>
+                        <td><%= message.date.toLocaleString() %></td>
+                        <td><%= message.isRead ? 'Read' : 'Unread' %></td>
+                        <td><%= message.isReplied ? 'Replied' : 'Not Replied' %></td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Action buttons">
+                                <form action="/admin/contact_messages/<%= message._id %>/toggle_read" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm <%= message.isRead ? 'btn-unread' : 'btn-read' %>">
+                                        <i class="fas <%= message.isRead ? 'fa-envelope-open' : 'fa-envelope' %>"></i>
+                                        <%= message.isRead ? 'Unread' : ' Read' %>
+                                    </button>
+                                </form>
+                                <form action="/admin/contact_messages/<%= message._id %>/toggle_reply" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm <%= message.isReplied ? 'btn-not-replied' : 'btn-replied' %>">
+                                        <i class="fas <%= message.isReplied ? 'fa-times' : 'fa-check' %>"></i>
+                                        <%= message.isReplied ? 'None Replied' : 'Replied' %>
+                                    </button>
+                                </form>
+                                <form action="/admin/contact_messages/<%= message._id %>?_method=DELETE" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

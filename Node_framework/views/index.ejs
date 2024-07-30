@@ -1,0 +1,133 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head>
+        <!-- Metadata about the document -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> 
+
+        <!-- Title of the webpage -->
+        <title>Nada Dhyan</title>
+  
+        <!-- Link to the main CSS file, including Bootstrap -->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body id="page-top"> 
+        <!-- Identifies the top of the page for navigation purposes -->
+        <!-- Navigation bar -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container px-5">
+                <!-- Brand name in the navigation bar -->
+                <a class="NadaDhyan_Title" href="/">Nada Dhyan</a>
+                
+                <!-- Collapsible navbar content -->
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav ms-auto my-lg-0"> <!-- Navigation links -->
+                        <li><a class="menu_bar nav-link me-lg-3" href="#About_page">About</a></li>
+                        <li><a class="menu_bar nav-link me-lg-3" href="#Program_page">Programs</a></li>
+                        <li><a class="menu_bar nav-link me-lg-3" href="/user/calendar">Calendar</a></li>
+                        <li><a class="menu_bar nav-link me-lg-3" href="/user/gallery">Gallery</a></li>
+                        <li><a class="menu_bar nav-link me-lg-3" href="/user/blog">Blog</a></li>
+                        <li><a class="menu_bar nav-link me-lg-3" href="/user/testimonials">Testimonials</a></li>
+                        <li><a class="menu_bar nav-link me-lg-3" href="/user/contact_us">Contact Us</a></li>    
+                    </ul>
+
+                    <% if (user) { %>
+                        <a type="button" class="btn btn-primary" href="/user/userinfo">
+                            <span><%= user.username%></span>
+                        </a>
+                    <% }  else {%>
+                        <!-- Sign in button -->
+                        <a type="button" class="btn btn-primary" href="/login">
+                            <span>Sign in</span>
+                        </a>
+                    <% }%>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header section -->
+        <header class="masthead">
+            <div class="container px-5">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- Header text -->
+                        <div class="mb-5 text-center text-lg-start">
+                            <h1 class="Heading1">This is for prototype 2</h1>
+                            <p>Hellooooooooooooooo</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Device mockup with video -->
+                        <div class="masthead-device-mockup">
+                            <div class="device-wrapper mb-5">
+                                <!-- Embedded video -->
+                                <video id="video" autoplay muted loop playsinline style="max-width: 100%; height: 100%">
+                                    <source src="img/index/Nada_Video2.mp4" type="video/mp4" />
+                                </video>
+                                <button id="unmuteButton" style="position: absolute; top: 10px; right: 10px; padding: 10px; background: rgba(0, 0, 0, 0.5); color: white; border: none; cursor: pointer;">
+                                    Unmute
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const video = document.getElementById('video');
+                const unmuteButton = document.getElementById('unmuteButton');
+        
+                unmuteButton.addEventListener('click', function() {
+                    video.muted = false;
+                    unmuteButton.style.display = 'none';
+                });
+            });
+        </script>
+
+        <!-- Section-divider -->
+        <section class="section-divider"></section>
+
+        <!-- About section -->
+        <section class="bg-light" id="About_page">
+            <div class="container px-5">
+                <div class="container px-5">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <!-- Header text -->
+                            <div class="mb-5 text-left-for-main text-lg-start">
+                                <h2 class="Heading2">Ancient Human Culture</h2>
+                                <p>Getting in touch with our roots opens nurturing of soul and possibilities.</p>
+                                 <!-- About button -->
+                                <a class="btn2 btn-outline-light text-white" href="/about">About</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <!-- Descriptive image -->
+                            <div class="px-5"><img class="about_photo rounded-circle" src="img/index/i_img2.jpeg"/>
+                            </div>
+                        </div>
+                    </div>
+        </section>
+
+        <!-- Call to action section -->
+        <section class="cta" id="Program_page">
+            <div class="container px-5">
+                <h2 class="text-white Heading1">Stay calm.<br />Feel the nature.</h2>
+                <!-- Join program button -->
+                <a class="btn2 btn-outline-light text-white" href="/user/Programs">Join our Program</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-black text-center py-5">
+            <div class="container px-5">
+                <div>
+                    <div>&copy; Copyright (c) 2011-2024 The Bootstrap Authors.</div> 
+                    <a href="#page-top">Go to top</a>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>
